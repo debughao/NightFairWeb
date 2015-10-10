@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>『夜夜通卖家』后台管理-修改信息</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/main.css" />
+<link rel="stylesheet" type="text/css" href="../uploadify/uploadify.css">
+<script type="text/javascript" src="../js/jquery-1.8.0.js"></script>
+<script type="text/javascript"
+	src="http://webapi.amap.com/maps?v=1.3&key=1fbdfdefd1bdd9930b0ce46e2f8bc656"></script>
+<script type="text/javascript" src="../js/myjs/sellerupdate.js"></script>
+<script type="text/javascript" src="../js/PCASClass.js"></script>
+<script type="text/javascript"
+	src="../uploadify/jquery.uploadify.min.js"></script>
+<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css" />
+</head>
+<script>
+	$.ajax({
+		url : "/NightFair/SellerUpdateInfo",
+		type : "post",
+		success : function(data) {
+			var dataObj = JSON.parse(data);
+			if (dataObj.status == 405) {
+				location.href = '/NightFair/login.html';
+			}
+		}
+	});
+</script>
+<body>
+	<div class="topbar-wrap white">
+		<div class="top-info-wrap">
+			<a class="logo" href="update.html">夜夜通</a>
+			<ul class="header_menu">
+				<li><a href="#">修改密码</a></li>
+				<li><a href="javascript:void(0);" onclick="logout()">退出</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container clearfix">
+		<div class="sidebar-wrap">
+			<div class="sidebar-title">
+				<h1>菜单</h1>
+			</div>
+			<div class="sidebar-content">
+				<ul class="sidebar-list">
+					<li><a href="#"><i class="icon-font">&#xe003;</i>常用操作</a>
+						<ul class="sub-menu">
+							<li><a href="update.html"><i class="icon-font">&#xe008;</i>信息修改</a></li>
+							<li><a href="goods_manage.html"><i class="icon-font">&#xe005;</i>商品管理</a></li>
+							<li><a href="coupon_manage.html"><i class="icon-font">&#xe033;</i>优惠券管理</a></li>
+							<li><a href="see_comment.html"><i class="icon-font">&#xe012;</i>评价查看</a></li>
+						</ul></li>
+					<li><a href="#"><i class="icon-font"></i>验证管理</a>
+						<ul class="sub-menu">
+							<li><a href="system.html"><i class="icon-font">&#xe065;</i>验证优惠券</a></li>
+							<li><a href="system.html"><i class="icon-font">&#xe061;</i>已验证优惠券</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="main-wrap">
+
+			<div class="crumb-wrap">
+				<div class="crumb-list">
+					<i class="icon-font"></i><a href="update.html">首页</a><span
+						class="crumb-step">&gt;</span><span class="crumb-name">商铺信息修改</span>
+				</div>
+			</div>
+			<div id="formbox">
+				<div class="result-wrap">
+					<form id="myform">
+						<div class="info">
+							<label>商铺名称：</label> <input name="name" id="name" type="text" /><label
+								id="companyname_succeed" class="blank" onfocus="onf1(this)"
+								onBlur="onb1(this)"></label> <label id="dp"
+								style="font-size: 13px"></label>
+						</div>
+						<div class="info">
+							<label>分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类：</label> <select
+								id="classify" name="classify" class="select">
+							</select>
+
+						</div>
+						<div class="info">
+							<label>联系电话：</label> <input name="phone" type="text"
+								onfocus="onf2(this)" onBlur="onb2(this)" /> <label id="dh"
+								style="font-size: 13px"></label>
+						</div>
+						<div class="info">
+							<label>商铺坐标：</label> <input name="longitude"
+								style="width: 110px;" readonly="readonly" type="text"
+								onFocus="onf3(this)" onBlur="onb3(this)"><label id="jd"
+								style="font-size: 13px"></label>&nbsp;&nbsp; <input
+								name="latitude" style="width: 110px;" readonly="readonly"
+								type="text" onFocus="onf4(this)" onBlur="onb4(this)"><label
+								id="wd" style="font-size: 13px"></label> <a href="javascript:;"
+								onclick="_add_btn()" class="demo6">获取坐标</a>
+						</div>
+						<div class="info">
+
+							<label>所在地区：</label> <select id="txtProvince" name="txtProvince"
+								class="select" onmouseover="mOver1(this)"
+								onmouseout="mOut1(this)"></select> <select id="txtCity"
+								name="txtCity" class="select" onmouseover="mOver2(this)"
+								onmouseout="mOut2(this)"></select> <select id="txtArea"
+								name="txtArea" class="select" datatype="s1-20" sucmsg=" "
+								onmouseover="mOver3(this)" onmouseout="mOut3(this)"></select> <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<label id="dq" style="font-size: 13px"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label
+								id="dq2"></label>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<label id="dq3" style="font-size: 13px"></label>
+						</div>
+						<div class="info">
+							<label>街&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;道：</label> <input
+								name="street" type="text" onFocus="onf5(this)"
+								onBlur="onb5(this)"><label id="ad"
+								style="font-size: 13px"></label>
+						</div>
+						<div class="info_upload">
+							<div class="upload">
+								<!-- 加上“*”表示当第一个文件上传成功后，立即上传以后队列中的文件，否则需要自己手动 -->
+								<a href="javascript:$('#file_upload').uploadify('upload','*')">上传</a><span>只支持(jpg;png;jpeg;gif)类型图片文件</span>
+							</div>
+							<input id="file_upload" name="file_upload" type="file"
+								multiple="true"><label>店铺logo：</label>
+
+						</div>
+						<div id="fileQueue"></div>
+						<div class="info_submit">
+							<input type="button" class="btn btn-primary btn6 mr10" value="提交"
+								onclick=" add();">
+						</div>
+					</form>
+
+				</div>
+				<div id="HBox" style="display: none;">
+					<div id="mapContainer"></div>
+					<a id="img" title="全屏" onclick="javascript:fullscreen()"> <img
+						alt="全屏" src="../images/fullscreen.png">
+					</a>
+					<div id="tip">
+						<b>请鼠标拖拽地图上蓝色标记图标获取坐标</b> <br>
+						<div>
+							X：<input type="text" readonly="readonly" id="lngX" name="lngX"
+								value="" />&nbsp; Y：<input type="text" readonly="readonly"
+								id="latY" name="latY" value="" /> <input type="button"
+								class="submitBtn" value="提交坐标" onclick="javascript:getInfo()">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../js/jquery.hDialog.min.js"></script>
+</body>
+</html>

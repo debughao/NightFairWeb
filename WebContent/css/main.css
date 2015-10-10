@@ -1,0 +1,447 @@
+.sidebar-wrap {
+	float: left;
+	width: 189px;
+	min-height: 700px;
+	height: auto !important;
+	height: 700px;
+	background: #f2f2f2;
+	border-right: 1px solid #ccc; /*cursor:e-resize;*/
+}
+
+.main-wrap {
+	margin-left: 190px;
+	min-height: 100%;
+}
+
+.sidebar-title {
+	height: 40px;
+	line-height: 40px;
+	text-indent: 1em;
+	font-size: 24px;
+	text-align: left;
+}
+
+.sidebar-title h1 {
+	font-weight: normal;
+}
+
+.sidebar-content {
+	padding-top: 5px;
+}
+
+.sidebar-list li {
+	border: 1px solid #e5e5e5;
+	border-width: 1px 0;
+}
+
+.sidebar-list li .icon-font {
+	margin-right: 5px;
+	color: #888;
+	font-size: 14px;
+}
+
+.sidebar-list li a {
+	padding: 0 16px 0 20px;
+	display: block;
+	height: 38px;
+	line-height: 38px;
+	color: #333;
+}
+
+.sidebar-list li a:hover {
+	background: #fff;
+	color: #1963AA;
+}
+
+.sub-menu {
+	border-top: 1px solid #e5e5e5;
+	background: #fff;
+}
+
+.sub-menu li {
+	padding-left: 21px;
+}
+
+.sub-menu li.on {
+	background: #1963AA;
+}
+
+.sub-menu li.on a {
+	background: #1963AA;
+	color: #fff;
+}
+
+.sub-menu li.on .icon-font {
+	color: #fff;
+}
+
+.sub-menu .icon-font {
+	font-size: 11px;
+}
+/* main */
+.crumb-wrap {
+	width:100%;
+	height: 40px;
+	line-height: 39px;
+	border-bottom: 1px solid #e5e5e5;
+	background: #f5f5f5;
+}
+
+.crumb-list {
+	padding-left: 12px;
+	width: 1000px;
+}
+
+.crumb-list .icon-font {
+	margin-right: 5px;
+}
+
+.crumb-step {
+	margin: 0 5px;
+	color: #b2c2e0;
+	font-family: serif;
+}
+#total_comment{
+background-color: #e3eae5;width:950px; margin: 10px 0; padding: 10px;	
+}
+.comment_total{
+	width:930px;
+	min-height: 595px;
+	height: auto !important;
+	height: 600px;
+	border: 1px solid #ccc;	
+	margin-top: 15px;
+	padding-left: 15px;
+}
+.dl_comment{
+	width:927px;
+	padding: 8px 0;
+   border-bottom: 1px dotted #DEDEDE
+}
+.dl_comment .user{
+	margin-top: 0;
+  color: #9C9A9C;
+}
+
+.dl_comment .content-comment{
+	width: 927px;
+	margin-top: 5px;
+  overflow: hidden;
+  zoom: 1
+}
+.dl_comment .content-comment .comment{	
+width: 927px;
+	color: #666;
+	overflow: hidden;
+}
+.dl_comment .title-comment span{
+margin-right:20px;
+}
+.dl_comment .title-comment .grade-comment{
+color: #FF6500;
+}
+.dl_comment .title-comment .date-comment{
+font: 12px/150% Arial,Verdana,"\5b8b\4f53";
+  color: #9C9A9C;
+}
+.search-wrap {
+	padding: 15px 0;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.search-tab tr {
+	line-height: 35px;
+}
+
+.search-tab th {
+	text-align: right;
+	padding-right: 10px;
+	font-weight: normal;
+}
+
+.search-tab td {
+	padding: 0 5px;
+}
+
+.common-text {
+	height: 23px;
+	line-height: 23px;
+	padding: 2px 4px;
+	border: 1px solid #ccc;
+	background: #fff;
+	border-radius: 5px;
+}
+
+.result-wrap {
+	position:relative;
+	width: 950px;
+	margin: 15px 5px 0px 5px;
+	padding: 10px 20px 20px;
+}
+
+.info {
+	width: 800px;
+	height: 40px;
+	margin: 10 0 5 5;
+}
+
+.info_submit {
+	width: 400px;
+	text-align: center;
+	margin: 30px 0 5px 5px;
+}
+
+.info_upload {
+	width: 600px;
+	height: 30px;
+	line-height: 30px;
+	margin: 10 0 0 5;
+}
+
+.info_upload .upload {
+	margin-right: 120px;
+	margin-bottom: 5px;
+	float: right;
+}
+
+.info_upload .upload span {
+	margin-left: 10px;
+	font-size: 12;
+	color: #999;
+}
+
+.info .input {
+	margin: 1px;
+	padding: 4px;
+	min-height: 20px;
+	line-height: 20px;
+	border: 1px solid #d4d4d4;
+	background: #fff;
+	vertical-align: middle;
+	color: #333;
+	font-size: 100%;
+}
+
+.select {
+	margin: 1px;
+	padding: 4px;
+	min-height: 20px;
+	line-height: 20px;
+	border: 1px solid #d4d4d4;
+	background: #fff;
+	vertical-align: middle;
+	color: #333;
+	font-size: 100%
+}
+
+.result-title {
+	line-height: 35px;
+	padding-bottom: 5px;
+	overflow: hidden;
+}
+
+.comment-title {
+	line-height: 35px;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+.result-list a {
+	margin-right: 15px;
+}
+
+.result-list i {
+	padding-right: 5px;
+}
+
+.result-tab {
+	border-collapse: collapse;
+	border: 1px solid #ddd;
+}
+
+.result-tab th {
+	font-weight: normal;
+	font-size: 15px;
+	text-align: left;
+	background: url(../images/tab-thbg.png) #f9f9f9 0 bottom repeat-x;
+}
+
+.result-tab th, .result-tab td {
+	padding: 5px;
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #e1e1e1;
+}
+
+.result-tab tr {
+	line-height: 35px;
+}
+
+.result-tab th.tc, .result-tab td.tc {
+	text-align: center;
+}
+
+.result-tab tr:nth-child(odd) {
+	background: #f9f9f9;
+}
+
+.result-tab tr:hover {
+	background: #f1f1f1;
+}
+
+.result-tab tr.even-tr {
+	background: #e9fff2;
+}
+
+.comment-tab {
+	border-bottom: 1px solid #ddd;
+	padding-left: 15px;
+	margin-bottom: 10px;
+}
+
+.comment-tab a {
+	float: left;
+}
+
+.comment-tab a.on {
+	padding: 0 15px;
+	background: #49afcd;
+	color: #fff;
+	border-radius: 5px 5px 0 0;
+}
+
+.fullBtnBlue {
+	display: inline-block;
+	height: 35px;
+	width: 135px;
+	margin:55px 60px 20px 30px;
+	font-size: 20px;
+	text-align: center;
+	outline: none;
+	cursor: pointer;
+	background-color: #528bca;
+	color: #fff;
+}
+
+/* config */
+.config-items {
+	margin-bottom: 25px;
+}
+
+.config-title {
+	margin-bottom: 10px;
+}
+
+.config-title h1 {
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.config-title h1 i {
+	margin-right: 5px;
+	font-size: 12px;
+}
+
+.columns-title {
+	padding: 10px 0;
+	height: 35px;
+	line-height: 35px;
+	overflow: hidden;
+}
+/*.columns-title .comment-tab{padding-left: 0;}*/
+.visitor-img {
+	float: left;
+}
+
+.visitor-info {
+	float: left;
+	padding-left: 10px;
+	line-height: 23px;
+}
+
+.visitor-email {
+	color: #aaa;
+}
+
+.short-wrap a {
+	margin-right: 20px;
+}
+
+.short-wrap a i {
+	margin-right: 5px;
+}
+
+.res-lab {
+	display: inline-block;
+	width: 150px;
+	padding-right: 10px;
+	text-align: right;
+}
+
+.sys-info-list li {
+	line-height: 35px;
+	border-bottom: 1px dashed #eaeaea;
+}
+
+.res-lab {
+	color: #909090;
+}
+
+.res-info {
+	font-size: 15px;
+}
+
+.sort-input {
+	width: 25px;
+	text-align: center;
+}
+/*------------- ��ͼ------------*/
+#tip {
+	height: 70px;
+	background-color: #fff;
+	padding-left: 10px;
+	padding-right: 10px;
+	position: absolute;
+	font-size: 12px;
+	right: 10px;
+	bottom: 30px;
+	border-radius: 3px;
+	line-height: 30px;
+	border: 1px solid #ccc;
+}
+
+#tip input {
+	border: 1px solid #ddd;
+	height: 23px;
+	border-radius: 3px;
+	outline: none;
+}
+
+#tip input[type='button'] {
+	height: 24px;
+	line-height: 24px;
+	outline: none;
+	text-align: center;
+	padding-left: 5px;
+	padding-right: 5px;
+	color: #FFF;
+	background-color: #0D9BF2;
+	border: 0;
+	border-radius: 3px;
+	margin: 5px 10px 0 5px;
+	cursor: pointer;
+}
+
+.amap-marker-label {
+	border: none;
+	left: 20px;
+}
+
+#img {
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	cursor: pointer;
+	position: absolute;
+	top: 8px;
+	right: 35px;
+}

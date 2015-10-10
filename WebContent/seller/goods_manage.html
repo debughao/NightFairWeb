@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>『夜夜通卖家』后台管理-商品编辑</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/main.css" />
+<link type="text/css" rel="stylesheet" href="../css/jquery.dataTables.min.css">
+<script type="text/javascript" src="../js/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="../js/libs/modernizr.min.js"></script>
+<script type="text/javascript" src="../js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../js/myjs/sellergoodstable.js"></script>
+<link rel="stylesheet" type="text/css" href="../uploadify/uploadify.css">
+<script type="text/javascript" src="../js/jquery.hDialog.min.js"></script>
+<script type="text/javascript"
+	src="../uploadify/jquery.uploadify.min.js"></script>
+</head>
+<script>
+	$.ajax({
+		url : "/NightFair/Seller/GetGoods",
+		type : "post",
+		success : function(data) {
+			var dataObj = JSON.parse(data);
+			if (dataObj.status == 405) {
+				location.href = '/NightFair/login.html';
+			}
+		}
+	});
+</script>
+<body>
+	<div class="topbar-wrap white">	
+			<div class="top-info-wrap">
+			<a class="logo" href="update.html">夜夜通</a>
+				<ul class="header_menu">
+					<li><a href="#">修改密码</a></li>
+				 <li><a href="javascript:void(0);"onclick="logout()">退出</a></li>
+				</ul>
+			</div>
+	</div>
+	<div class="container clearfix">
+		<div class="sidebar-wrap">
+			<div class="sidebar-title">
+				<h1>菜单</h1>
+			</div>
+			<div class="sidebar-content">
+				<ul class="sidebar-list">
+					<li><a href="#"><i class="icon-font">&#xe003;</i>常用操作</a>
+						<ul class="sub-menu">
+							<li><a href="update.html"><i class="icon-font">&#xe008;</i>信息修改</a></li>
+							<li><a href="goods_manage.html"><i class="icon-font">&#xe005;</i>商品管理</a></li>
+							<li><a href="coupon_manage.html"><i class="icon-font">&#xe033;</i>优惠券管理</a></li>
+							<li><a href="see_comment.html"><i class="icon-font">&#xe012;</i>评价查看</a></li>
+						</ul>
+					</li>
+				<li>
+                    <a href="#"><i class="icon-font"></i>验证管理</a>
+                    <ul class="sub-menu">
+                        <li><a href="system.html"><i class="icon-font">&#xe065;</i>验证优惠券</a></li>
+                        <li><a href="system.html"><i class="icon-font">&#xe061;</i>已验证优惠券</a></li>                      
+                    </ul>
+                </li>
+				</ul>
+			</div>
+		</div>
+		<div class="main-wrap">
+
+			<div class="crumb-wrap">
+				<div class="crumb-list">
+					<i class="icon-font"></i><a href="update.html">首页</a><span
+						class="crumb-step">&gt;</span><span class="crumb-name">商品管理</span>
+				</div>
+			</div>
+				<div class="result-wrap">
+					<div
+						style="background-color: #e3eae5;width:950px; margin: 10px 0; padding: 10px">
+						<a href="javascript:;" onclick="_add_btn()" class="demo6">新增</a>
+					</div>
+
+					<table id="example"id="example" class="display" cellspacing="0" width="100%"
+						class="display table table-striped table-bordered dataTable no-footer">
+						<thead>
+							<tr>
+								<th>编号</th>
+								<th>美食名称</th>
+								<th>美食价格</th>
+								<th>美食销量</th>
+								<th>美食推荐量</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+					<div id="HBox" style="display: none;">
+						<form id="form">
+						 <input id="id" type="hidden" value="">						
+							<ul class="list">
+								<li><strong>美食名称 <font color="#ff0000">*</font></strong>
+									<div class="fl">
+										<input type="text" id="good_name"name="good_name" value=""
+											class="ipt good_name" />
+									</div></li>
+								<li><strong>美食价格<font color="#ff0000">*</font></strong>
+									<div class="fl">
+										<input type="text" id="real_price" name="real_price" value=""
+											class="ipt real_price" maxlength="9"/>
+									</div></li>
+								<li><strong>美食销量 <font color="#ff0000">*</font></strong>
+									<div class="fl">
+										<input type="text" id="seller_counts"name="seller_counts" value=""
+											class="ipt seller_counts" maxlength="9"/>
+									</div></li>
+								<li><strong>美食描述 <font color="#ff0000">*</font></strong>
+									<div class="fl">
+										<textarea id="introduction"name="introduction" 
+											class="ipt introduction" rows="10" cols="30"></textarea>
+									</div></li>
+								<li><input id="btn" type="button" onclick="btnOnclick(this)"
+									value="确认提交" class="submitBtn" /> 
+							</ul>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script type="text/javascript" src="../js/jquery.hDialog.min.js"></script>
+	<script>
+		$(function() {
+			var $el = $('.dialog');
+			$el.hDialog();
+			//遮罩不可关闭
+			$('.demo6').hDialog({
+				title : '商品编辑',
+				width : 600,
+				height : 600,
+				modalHide : false,
+				modalBg : 'rgba(0,0,0,0.5)'
+			});
+		});
+	</script>
+</body>
+</html>

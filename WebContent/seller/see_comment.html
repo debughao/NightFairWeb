@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>『夜夜通卖家』后台管理-修改信息</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/main.css" />
+<script type="text/javascript" src="../js/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="../js/myjs/sellergetcomment.js"></script>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.tcdPageCode {
+  width:950px;
+	padding: 15px 20px;
+	color: #ccc;
+	text-align: center;
+}
+
+.tcdPageCode a {
+	display: inline-block;
+	color: #428bca;
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 10px;
+	border: 1px solid #ddd;
+	margin: 0 2px;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+
+.tcdPageCode a:hover {
+	text-decoration: none;
+	border: 1px solid #428bca;
+}
+
+.tcdPageCode span.current {
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 10px;
+	margin: 0 2px;
+	color: #fff;
+	background-color: #428bca;
+	border: 1px solid #428bca;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+
+.tcdPageCode span.disabled {
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 10px;
+	margin: 0 2px;
+	color: #bfbfbf;
+	background: #f2f2f2;
+	border: 1px solid #bfbfbf;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+</style>
+</head>
+<script>
+	$.ajax({
+		url : "/NightFair/Seller/GetComment",
+		type : "post",
+		success : function(data) {
+			var dataObj = JSON.parse(data);
+			if (dataObj.status == 405) {
+				location.href = '../login.html';
+			}
+		}
+	});
+</script>
+<body>
+	<div class="topbar-wrap white">
+		<div class="top-info-wrap">
+			<a class="logo" href="update.html">夜夜通</a>
+			<ul class="header_menu">
+				<li><a href="#">修改密码</a></li>
+			<li><a href="javascript:void(0);"onclick="logout()">退出</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container clearfix">
+		<div class="sidebar-wrap">
+			<div class="sidebar-title">
+				<h1>菜单</h1>
+			</div>
+			<div class="sidebar-content">
+				<ul class="sidebar-list">
+					<li><a href="#"><i class="icon-font">&#xe003;</i>常用操作</a>
+						<ul class="sub-menu">
+							<li><a href="/NightFair/seller/update.html"><i class="icon-font">&#xe008;</i>信息修改</a></li>
+							<li><a href="/NightFair/seller/goods_manage.html"><i class="icon-font">&#xe005;</i>商品管理</a></li>
+							<li><a href="/NightFair/seller/coupon_manage.html"><i class="icon-font">&#xe033;</i>优惠券管理</a></li>
+							<li><a href="/NightFair/seller/see_comment.html"><i class="icon-font">&#xe012;</i>评价查看</a></li>
+						</ul></li>
+					<li><a href="#"><i class="icon-font"></i>验证管理</a>
+						<ul class="sub-menu">
+							<li><a href="#"><i class="icon-font">&#xe065;</i>验证优惠券</a></li>
+							<li><a href="#"><i class="icon-font">&#xe061;</i>已验证优惠券</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="main-wrap">
+
+			<div class="crumb-wrap">
+				<div class="crumb-list">
+					<i class="icon-font"></i><a href="update.html">首页</a><span
+						class="crumb-step">&gt;</span><span class="crumb-name">商铺信息修改</span>
+				</div>
+			</div>
+			<div id="formbox">
+				<div class="result-wrap">
+				<span id="total_comment"></span>
+					<div class="comment_total">
+						
+					</div>
+			  </div>
+				<div class="tcdPageCode"></div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
