@@ -21,6 +21,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import com.nightfair.dao.DaoFactory;
 import com.nightfair.dao.SellerDao;
+import com.nightfair.uitl.MD5Util;
 import com.nightfair.vo.User;
 
 
@@ -39,12 +40,12 @@ public class ShopImageUploadServlet extends HttpServlet {
 
 		response.setContentType("text/html;charset=utf-8;");
 		request.setCharacterEncoding("utf-8");
-		String userid=request.getParameter("user_id");
+	
 		User user = (User) request.getSession().getAttribute("user");
 		SellerDao sellerDao = DaoFactory.getInstance().getSellerDao();
-		if (user != null) {
+		if (user != null) {		
 			int seller_id = sellerDao.getSelleridByUid(user.getU_id());
-		int user_id=Integer.parseInt(userid);
+			System.out.println("商家id"+seller_id);
 		PrintWriter out = response.getWriter();
 		// 设置接收的编码格式
 		request.setCharacterEncoding("UTF-8");
@@ -53,10 +54,10 @@ public class ShopImageUploadServlet extends HttpServlet {
 		String newfileName = sdfFileName.format(date);// 文件名称
 		String fileRealPath = "";// 文件存放真实地址
 		String fileRealResistPath = "";// 文件存放真实相对路径
-		// 名称 界面编码 必须 和request 保存一致..否则乱码
 		String firstFileName = "";
 		// 获得容器中上传文件夹所在的物理路径
-		String savePath = "D:\\NightFair\\UploadFile\\shopimage\\" ;
+		String user_id=MD5Util.MD5(String.valueOf(seller_id));
+		String savePath = "C:\\NightFair\\UploadFile\\shopimage\\"+user_id+"\\";
 		System.out.println("路径" + savePath);
 		File file = new File(savePath);
 		if (!file.isDirectory()) {
@@ -84,7 +85,7 @@ public class ShopImageUploadServlet extends HttpServlet {
 						String formatName = firstFileName
 								.substring(firstFileName.lastIndexOf("."));// 获取文件后缀名
 						fileRealPath = savePath + newfileName + formatName;// 文件存放真实地址
-                         System.out.println(fileRealPath);
+                       
 						BufferedInputStream in = new BufferedInputStream(
 								item.getInputStream());// 获得文件输入流
 						BufferedOutputStream outStream = new BufferedOutputStream(
@@ -93,11 +94,12 @@ public class ShopImageUploadServlet extends HttpServlet {
 						// 上传成功，则插入数据库
 						if (new File(fileRealPath).exists()) {
 							// 虚拟路径赋值
-							fileRealResistPath = "/NightFair/UploadFile/shopimage/"
+							fileRealResistPath = "/NightFair/UploadFile/shopimage/"+user_id+"/"
 									+ fileRealPath.substring(
 											fileRealPath.lastIndexOf("\\") + 1);
 							System.out.println("虚拟路径:" + fileRealResistPath);
-							if(sellerDao.uploadshopimage(fileRealResistPath, 201501)){
+							System.out.println(seller_id);
+							if(sellerDao.uploadshopimage(fileRealResistPath, seller_id)){
 							 System.out.println("保存路径到数据库成功");	
 							}else{
 								System.out.println("保存路径到数据库失败");	

@@ -29,6 +29,7 @@ body input, body textarea {font-family: "微软雅黑","Microsoft Yahei",Arial,H
 .normalInput{float: left;position: relative;display: inline-block;padding: 0px 10px;width: 260px;height: 30px;line-height: 22px;font-size: 16px;margin-bottom: 20px;border: 1px solid #dadada;outline: none;color: #474747;overflow: visible;}
 .error{display: none;margin-left: 0px;margin-bottom: 5px;color: #FF6500;float: left;}
 /*#mainForm1 .normalInput input,#mainForm2 .normalInput input{line-height: 22px;padding: 14px 0;height: 22px;}*/
+.normalInput input{font-size: 16px;width: 100%;padding: 14px 0;height: 22px;}
 .errorC{ margin-bottom: 10px;border-color: #FF6500;color: red;}
 .checkedN{border: 1px solid #1ece6d;}
 
@@ -58,7 +59,7 @@ body input, body textarea {font-family: "微软雅黑","Microsoft Yahei",Arial,H
 /*mainForm2*/
 .linkAGray2:visited {color: #00a7ea;}
 .linkABlue2:hover{color: #2b2b2b;}
-/* .normalInput .username{width: 220px;border: none;outline: none;font-size: 16px} */
+.normalInput .username{width: 220px;border: none;outline: none;font-size: 16px;height: 22px;line-height: 22px;padding: 14px 0;}
 .grayTip {height: 50px;line-height: 50px;vertical-align: top;display: inline-block;color: #7f7f7f;}
 /*mainForm2end*/
 

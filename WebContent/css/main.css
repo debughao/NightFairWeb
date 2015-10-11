@@ -196,10 +196,11 @@ font: 12px/150% Arial,Verdana,"\5b8b\4f53";
 	height: 30px;
 	line-height: 30px;
 	margin: 10 0 0 5;
+	position: relative;
 }
 
 .info_upload .upload {
-	margin-right: 120px;
+	margin-right: 30px;
 	margin-bottom: 5px;
 	float: right;
 }
