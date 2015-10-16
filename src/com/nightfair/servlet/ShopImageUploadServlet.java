@@ -45,8 +45,8 @@ public class ShopImageUploadServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user");
 		SellerDao sellerDao = DaoFactory.getInstance().getSellerDao();
 		if (user != null) {		
-			int seller_id = sellerDao.getSelleridByUid(user.getU_id());
-			System.out.println("商家id"+seller_id);
+			int user_id = (user.getU_id());
+			System.out.println("商家id"+user_id);
 		PrintWriter out = response.getWriter();
 		// 设置接收的编码格式
 		request.setCharacterEncoding("UTF-8");
@@ -57,8 +57,8 @@ public class ShopImageUploadServlet extends HttpServlet {
 		String fileRealResistPath = "";// 文件存放真实相对路径
 		String firstFileName = "";
 		// 获得容器中上传文件夹所在的物理路径
-		String user_id=MD5Util.MD5(String.valueOf(seller_id));
-		String savePath = "C:\\NightFair\\UploadFile\\shopimage\\"+user_id+"\\";
+		String user_ids=MD5Util.MD5(String.valueOf(user_id));
+		String savePath = "C:\\NightFair\\image\\shopimage\\"+user_ids+"\\";
 		System.out.println("路径" + savePath);
 		File file = new File(savePath);
 		if (!file.isDirectory()) {
@@ -95,12 +95,11 @@ public class ShopImageUploadServlet extends HttpServlet {
 						// 上传成功，则插入数据库
 						if (new File(fileRealPath).exists()) {
 							// 虚拟路径赋值
-							fileRealResistPath = "/NightFair/UploadFile/shopimage/"+user_id+"/"
+							fileRealResistPath = "www.debguhao.cn/image/shopimage/"+user_ids+"/"
 									+ fileRealPath.substring(
 											fileRealPath.lastIndexOf("\\") + 1);
 							System.out.println("虚拟路径:" + fileRealResistPath);
-							System.out.println(seller_id);
-							if(sellerDao.uploadshopimage(fileRealResistPath, seller_id)){
+							if(sellerDao.uploadshopimage(fileRealResistPath, user_id)){
 							 System.out.println("保存路径到数据库成功");	
 							}else{
 								System.out.println("保存路径到数据库失败");	

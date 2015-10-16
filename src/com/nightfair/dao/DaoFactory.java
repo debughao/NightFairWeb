@@ -2,10 +2,10 @@ package com.nightfair.dao;
 
 /**
  * 
-* @ClassName: DaoFactory
-* @Description: TODO(单例模式，使用工厂方法)
-* @author debughao
-* @date 2015年9月16日
+ * @ClassName: DaoFactory
+ * @Description: TODO(单例模式，使用工厂方法)
+ * @author debughao
+ * @date 2015年9月16日
  */
 public class DaoFactory {
 
@@ -15,6 +15,7 @@ public class DaoFactory {
 	private static GoodDao goodDao = null;
 	private static CouponDao couponDao = null;
 	private static CommentDao commentDao = null;
+	private static BuyerDao buyerrDao = null;
 	private static DaoFactory daoFactory = new DaoFactory();
 
 	private DaoFactory() {
@@ -24,6 +25,7 @@ public class DaoFactory {
 		goodDao = new GoodDao();
 		couponDao = new CouponDao();
 		commentDao = new CommentDao();
+		buyerrDao = new BuyerDao();
 	}
 
 	public static DaoFactory getInstance() {
@@ -52,6 +54,11 @@ public class DaoFactory {
 
 	public CommentDao getCommentDao() {
 		return commentDao;
+
+	}
+
+	public BuyerDao getBuyerDao() {
+		return buyerrDao;
 
 	}
 

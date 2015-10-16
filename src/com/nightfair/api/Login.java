@@ -18,7 +18,7 @@ import net.sf.json.JSONObject;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/Buyer/Login")
+@WebServlet("/buyer/login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -50,7 +50,7 @@ public class Login extends HttpServlet {
 		UserDao userDao = DaoFactory.getInstance().getUserDao();
 		String key =request.getParameter("key");
 		System.out.println("用户的key："+key);
-		if ("123456".equals(key)) {
+		if ("a2e22c742b952403".equals(key)) {
 			String username= request.getParameter("userName");		
 			String password= request.getParameter("userpassword");
 			System.out.println("用户名："+username+"密码："+password);
