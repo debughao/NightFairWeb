@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -53,8 +52,8 @@ public class UserUploadHead extends HttpServlet {
 						b[i] += 256;
 					}
 				}
-				// 生成jpeg图片
-				String imgFilePath = "D://"+"123.png";// 新生成的图片
+				// 生成图片
+				String imgFilePath = "C://"+"123.png";// 新生成的图片
 				out = new FileOutputStream(imgFilePath);
 				out.write(b);
 				out.flush();

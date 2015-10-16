@@ -35,6 +35,7 @@ public class ShopImageUploadServlet extends HttpServlet {
 		doPost(request, response);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -68,7 +69,7 @@ public class ShopImageUploadServlet extends HttpServlet {
 			ServletFileUpload upload = new ServletFileUpload(fac);
 			upload.setHeaderEncoding("UTF-8");
 			// 获取多个上传文件
-			List fileList = fileList = upload.parseRequest(request);
+			List fileList = upload.parseRequest(request);
 			// 遍历上传文件写入磁盘
 			Iterator it = fileList.iterator();
 			while (it.hasNext()) {

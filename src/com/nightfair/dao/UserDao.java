@@ -161,7 +161,7 @@ public class UserDao implements IUserDao {
 			rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				int u_id = rs.getInt("u_id");
-				f =new User(u_id, null, null, null, 1);				
+				f =new User(u_id, null, null, 1);				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

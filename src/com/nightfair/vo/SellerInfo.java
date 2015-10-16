@@ -8,6 +8,12 @@ public class SellerInfo {
 	private String province;
 	private String city;
 	private String arer;
+	private String street;
+	private String latitude;
+	private String longitude;
+	private double  rank;
+	private String classify_id;
+	private String img;
 	public SellerInfo(int id, int user_id, String seller_name, String phone, String province, String city, String arer,
 			String street, String latitude, String longitude, double rank, String classify_id) {
 		super();
@@ -25,12 +31,7 @@ public class SellerInfo {
 		this.classify_id = classify_id;
 	}
 
-	private String street;
-	private String latitude;
-	private String longitude;
-	private double  rank;
-	private String classify_id;
-	private String img;
+	
 
 	public SellerInfo() {
 		super();

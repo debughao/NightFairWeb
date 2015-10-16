@@ -14,7 +14,6 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int u_id;
 	private String username;
-	private String nickname;
 	private String email;
 	private String phone;
 	private String password;
@@ -24,10 +23,9 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(int u_id, String nickname, String email, String phone, int type) {
+	public User(int u_id,  String email, String phone, int type) {
 		super();
 		this.u_id = u_id;
-		this.nickname = nickname;
 		this.email = email;
 		this.phone = phone;
 		this.type = type;
@@ -37,7 +35,6 @@ public class User implements Serializable {
 		super();
 		this.u_id = u_id;
 		this.username = username;
-		this.nickname = nickname;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
@@ -52,13 +49,7 @@ public class User implements Serializable {
 		this.u_id = u_id;
 	}
 
-	public String getNickname() {
-		return nickname;
-	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
 
 	public String getEmail() {
 		return email;
@@ -102,12 +93,10 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [u_id=" + u_id + ", username=" + username + ", nickname=" + nickname + ", email=" + email
+		return "User [u_id=" + u_id + ", username=" + username + ",  email=" + email
 				+ ", phone=" + phone + ", password=" + password + ", type=" + type + "]";
 	}
 
-	public String toString1() {
-		return "User [u_id=" + u_id + ", nickname=" + nickname + " ]";
-	}
+
 
 }

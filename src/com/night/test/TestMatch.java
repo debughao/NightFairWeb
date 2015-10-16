@@ -11,6 +11,19 @@ public class TestMatch {
 		System.out.println("true为手机号"+Matches.isPhone("15737954118"));
 		//邮箱
 		System.out.println("true为邮箱"+Matches.isEmail("863260364@qq.com"));
+		
+		String[] str2=new String[]{"洛阳","广东省","fuj"};
+		System.out.println(getPosition("广东省", str2));
 	}
-
+	public static int getPosition(String str1,String[]str2){
+		int n = 0;
+		for (int i = 0; i < str2.length; i++) {
+			if(str2[i]==str1){
+				n=i;
+				break;
+			}
+			
+		}
+		return n;		
+	}
 }

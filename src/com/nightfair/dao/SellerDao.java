@@ -18,8 +18,8 @@ public class SellerDao implements ISellerDao {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		System.out.println(sellerInfo);
-		String sql = "update user,seller_info set nickname=?,phone=?,province=?, city=?,  arer=?,"
-				+ " street=?,latitude=?, longitude=?,  classify_id=?  where user_id=? and user.u_id=seller_info.user_id ";
+		String sql = "update seller_info set seller_name=?,seller_phone=?,province=?, city=?,  arer=?,"
+				+ " street=?,latitude=?, longitude=?,  classify_id=?  where user_id=? ";
 		try {
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
@@ -54,7 +54,7 @@ public class SellerDao implements ISellerDao {
 		PreparedStatement preparedStatement = null;
 		SellerInfo sellerInfo = null;
 		ResultSet resultSet = null;
-		String sql = "SELECT * FROM USER,seller_info WHERE user.u_id= seller_info.user_id AND u_id=? LIMIT 1";
+		String sql = "SELECT * FROM seller_info WHERE user_id=? LIMIT 1";
 		try {
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
@@ -62,9 +62,9 @@ public class SellerDao implements ISellerDao {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				int  id = resultSet.getInt("id");
-				int  user_id = resultSet.getInt("u_id");
-				String seller_name = resultSet.getString("nickname");
-				String phone = resultSet.getString("Phone");
+				int  user_id = resultSet.getInt("user_id");
+				String seller_name = resultSet.getString("seller_name");
+				String phone = resultSet.getString("seller_phone");
 				String province = resultSet.getString("province");
 				String city = resultSet.getString("city");
 				String arer = resultSet.getString("arer");

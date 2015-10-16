@@ -26,10 +26,10 @@ public class CommentDao implements ICommentDao {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		int m = (pageNow-1) * pageNum;
+		int m = (pageNow - 1) * pageNum;
 		System.out.println(m);
 		int n = pageNum;
-		String sql = "select * from comments,user where comments.user_id=user.u_id  " + "and seller_id= ? ORDER BY id ASC limit ?,?";
+		String sql = "select * from comments,buyer_info where comments.user_id=buyer_info.user_id and seller_id=? ORDER BY comments.id ASC limit ?,?";
 		connection = DBUtils.getConnection();
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -49,7 +49,7 @@ public class CommentDao implements ICommentDao {
 				couponsList.add(comments);
 			}
 		} catch (SQLException e) {
-			;
+
 			e.printStackTrace();
 		} finally {
 			DBUtils.release(rs, preparedStatement, connection);
@@ -59,7 +59,7 @@ public class CommentDao implements ICommentDao {
 
 	@Override
 	public ArrayList<Integer> getCommentNumSellerid(int seller_id, int pageNum) {
-		ArrayList<Integer> nums=new ArrayList<Integer>();
+		ArrayList<Integer> nums = new ArrayList<Integer>();
 		int num = 1;
 		num = PageNumUitl.getNum("comments", "seller_id", seller_id);
 		System.out.println("总条数" + num);
