@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nightfair.dao.BuyerDao;
 import com.nightfair.dao.DaoFactory;
 import com.nightfair.dao.UserDao;
+import com.nightfair.vo.BuyerInfo;
 import com.nightfair.vo.User;
 
 import net.sf.json.JSONObject;
@@ -45,7 +47,7 @@ public class Login extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		response.setHeader("content-type", "text/html;charset=UTF-8");
 		int status = 404;
-		String errReason="";
+		String result="";
 		JSONObject jsonObject = new JSONObject();
 		UserDao userDao = DaoFactory.getInstance().getUserDao();
 		String key =request.getParameter("key");
@@ -57,19 +59,29 @@ public class Login extends HttpServlet {
 			User user2=userDao.isPassLogin(username ,password,"2");
 			if(user2==null){
 				  status=10002;// 10002表示不可以登录
-				  errReason="登录名或密码错误！";
+				  result="登录名或密码错误！";
 			}else{
-				System.out.println(user2);
+				request.getSession().setAttribute("buyer", user2);
+				BuyerDao buyerDao = DaoFactory.getInstance().getBuyerDao();
+				BuyerInfo buyerInfo = new BuyerInfo();
+				buyerInfo = buyerDao.getBuyerinfo(user2.getU_id());
+				if (buyerInfo != null) {
+					jsonObject.put("user_id", user2.getU_id());
+					jsonObject.put("info", buyerInfo);
+					status = 200;
+					result = "获取数据成功";
+				}
+				System.out.println(request.getSession().getId());
 				status=200;
-				errReason="登录成功！";
+				result="登录成功！";
 			}
 			
 		}else{
 			status=10001;
-			errReason="错误的请求key！";
+			result="错误的请求key！";
 		}
 		jsonObject.put("status", status);
-		jsonObject.put("errReason", errReason);
+		jsonObject.put("errReason", result);
 		PrintWriter pw = response.getWriter();
 		pw.write(jsonObject.toString());
 		System.out.println(jsonObject);

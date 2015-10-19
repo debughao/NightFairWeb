@@ -17,13 +17,13 @@ public class User implements Serializable {
 	private String email;
 	private String phone;
 	private String password;
-	private int type;
+	private String  type;
 
 	public User() {
 		super();
 	}
 
-	public User(int u_id,  String email, String phone, int type) {
+	public User(int u_id,  String email, String phone, String type) {
 		super();
 		this.u_id = u_id;
 		this.email = email;
@@ -31,7 +31,7 @@ public class User implements Serializable {
 		this.type = type;
 	}
 
-	public User(int u_id,  String nickname,String username, String email, String phone, String password, int type) {
+	public User(int u_id,  String username, String email, String phone, String password, String type) {
 		super();
 		this.u_id = u_id;
 		this.username = username;
@@ -75,11 +75,11 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 

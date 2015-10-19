@@ -119,12 +119,11 @@ public class UserDao implements IUserDao {
 			preparedStatement.setString(3, uer.getEmail());
 			preparedStatement.setString(4, uer.getPhone());
 			preparedStatement.setString(5, MD5Util.MD5(uer.getPassword()));
-			preparedStatement.setInt(6, uer.getType());
+			preparedStatement.setString(6, uer.getType());
 			if (preparedStatement.executeUpdate() > 0) {
 				f = false;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			DBUtils.release(null, preparedStatement, connection);
@@ -160,8 +159,8 @@ public class UserDao implements IUserDao {
 			preparedStatement.setString(5, type);
 			rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				int u_id = rs.getInt("u_id");
-				f =new User(u_id, null, null, 1);				
+				int u_id = rs.getInt("u_id");			
+				f =new User(u_id, username, password, type);				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

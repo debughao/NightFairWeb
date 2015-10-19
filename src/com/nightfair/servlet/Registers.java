@@ -71,7 +71,7 @@ public class Registers extends HttpServlet {
 			String email = request.getParameter("email");
 			String phone = request.getParameter("phone");
 			String password = request.getParameter("password");
-			User user = new User(0, null, username, email, phone, password, 2);
+			User user = new User(0, username, email, phone, password, "2");
 			if (userDao.regiserUser(user)) {
 				status = 404;// 404表示不可以注册
 				values = false;

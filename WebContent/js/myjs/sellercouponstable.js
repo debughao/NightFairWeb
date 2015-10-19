@@ -147,8 +147,6 @@ function btnOnclick() {
         });
 
     }
-
-
 }
 function _deleteFun(e, id) {
 
