@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import com.nightfair.dao.Interface.ISellerDao;
 import com.nightfair.uitl.DBUtils;
+import com.nightfair.uitl.RandomNickname;
 import com.nightfair.vo.SellerInfo;
 
 public class SellerDao implements ISellerDao {
@@ -154,6 +156,33 @@ public class SellerDao implements ISellerDao {
 		DBUtils.release(resultSet, preparedStatement, connection);
 
 		return seller_id;
+	}
+
+	@Override
+	public boolean insertBuyerInfo(int seller_id) {
+		// TODO Auto-generated method stub
+		boolean f = false;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "insert into seller_info(user_id,seller_name) values(?,?)";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);		
+			RandomNickname rNickname = new RandomNickname();
+			String nickname = "用户" + 2 * rNickname.getRandomHan();
+			preparedStatement.setInt(1,seller_id );
+			preparedStatement.setString(2,  nickname);
+			int n=preparedStatement.executeUpdate();
+			if (n>0) {
+				f=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.release(null, preparedStatement, connection);
+			System.out.println(f);
+		}
+		return f;
 	}
 
 }

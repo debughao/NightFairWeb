@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.nightfair.dao.DaoFactory;
+import com.nightfair.dao.SellerDao;
 import com.nightfair.dao.UserDao;
 import com.nightfair.uitl.MD5Util;
 import com.nightfair.vo.User;
@@ -52,17 +53,17 @@ public class Registers extends HttpServlet {
 		System.out.println("操作:" + validate + "输入内容：" + parameter);
 		UserDao userDao = DaoFactory.getInstance().getUserDao();
 		if ("username".equals(validate)) {
-			if (!userDao.existUserByUsername(parameter)) {
+			if (!userDao.existUserByUsername(parameter, "1")) {
 				status = 404;// 404表示不可以注册
 				values = false;
 			}
 		} else if ("email".equals(validate)) {
-			if (!userDao.existUserByEmail(parameter)) {
+			if (!userDao.existUserByEmail(parameter, "1")) {
 				status = 404;// 404表示不可以注册
 				values = false;
 			}
 		} else if ("phone".equals(validate)) {
-			if (!userDao.existUserByPhone(parameter)) {
+			if (!userDao.existUserByPhone(parameter, "1")) {
 				status = 404;// 404表示不可以注册
 				values = false;
 			}
@@ -71,11 +72,16 @@ public class Registers extends HttpServlet {
 			String email = request.getParameter("email");
 			String phone = request.getParameter("phone");
 			String password = request.getParameter("password");
-			User user = new User(0, username, email, phone, password, "2");
-			if (userDao.regiserUser(user)) {
+			User user = new User(0, username, email, phone, password, "1");
+			System.out.println("-----注册用户------"+user);
+			int n=userDao.regiserUser(user);
+			if (n==0) {
 				status = 404;// 404表示不可以注册
 				values = false;
-			}
+			}else {
+				SellerDao sellerDao =DaoFactory.getInstance().getSellerDao();
+				sellerDao.insertBuyerInfo(n);
+				}							
 		} else if ("login".equals(validate)) {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");

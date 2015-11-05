@@ -10,6 +10,8 @@ import com.nightfair.dao.Interface.ICommentDao;
 import com.nightfair.uitl.DBUtils;
 import com.nightfair.uitl.PageNumUitl;
 import com.nightfair.vo.Comment;
+import com.nightfair.vo.Comments;
+import com.nightfair.vo.SellerCommentsBuyer;
 
 /**
  * 
@@ -55,6 +57,72 @@ public class CommentDao implements ICommentDao {
 			DBUtils.release(rs, preparedStatement, connection);
 		}
 		return couponsList;
+	}
+
+	@Override
+	public SellerCommentsBuyer getSellerCommentsBuyerBySellerid(int seller_id, int pageNum, int pageNow) {
+		// TODO Auto-generated method stub
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		SellerCommentsBuyer sellerCommentsBuyer = null;
+		String sql = "select * from view_comment where seller_id=? ";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, seller_id);
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				double rank = rs.getDouble("rank");
+				ArrayList<Comments> comments = null;
+				CommentDao commentDao = DaoFactory.getInstance().getCommentDao();
+				comments = commentDao.getCommentsBySellerid(seller_id, pageNum, pageNow);
+				sellerCommentsBuyer = new SellerCommentsBuyer(seller_id, rank, comments);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			DBUtils.release(rs, preparedStatement, connection);
+		}
+		return sellerCommentsBuyer;
+	}
+
+	@Override
+	public ArrayList<Comments> getCommentsBySellerid(int seller_id, int pageNum, int pageNow) {
+		ArrayList<Comments> mComments = new ArrayList<Comments>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		int m = (pageNow - 1) * pageNum;
+		System.out.println(m);
+		int n = pageNum;
+		String sql = "select * from view_comment where seller_id=? ORDER BY id ASC limit ?,?";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, seller_id);
+			preparedStatement.setInt(2, m);
+			preparedStatement.setInt(3, n);
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				double grade = rs.getDouble("grade");
+				String comment = rs.getString("comment");
+				String time = rs.getString("time");
+				String buyerimg = rs.getString("image");
+				String nickname = rs.getString("nickname");
+				int buyer_id = rs.getInt("buyer_id");
+				Comments comments=new Comments(id, grade, comment, time, buyer_id, nickname, buyerimg);
+				mComments.add(comments);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			DBUtils.release(rs, preparedStatement, connection);
+		}
+		return mComments;
 	}
 
 	@Override

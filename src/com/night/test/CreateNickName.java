@@ -6,7 +6,7 @@ public class CreateNickName {
 
 	public static void main(String[] args) {
 	       RandomHan han = new RandomHan();
-	       String nickname="用户"+2*han.getRandomHan();
+	       String nickname="用户"+14*han.getRandomHan();
 	        System.out.print(nickname);
 	    }
 	     

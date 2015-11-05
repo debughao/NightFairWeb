@@ -14,6 +14,10 @@ public class TestMatch {
 		
 		String[] str2=new String[]{"洛阳","广东省","fuj"};
 		System.out.println(getPosition("广东省", str2));
+		String s1 ="146路(启月街首末站-虎丘首末站)";
+		int n =s1.indexOf("(");
+		String s2=s1.substring(0, n);
+		System.out.println(s2);
 	}
 	public static int getPosition(String str1,String[]str2){
 		int n = 0;

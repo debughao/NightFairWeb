@@ -12,7 +12,8 @@ public class Coupon {
 	private String update_time;
 	private int  seller_counts;
 	private int state;
-	
+	private int isguess;
+	private int isrecommend;
 	public int getId() {
 		return id;
 	}
@@ -66,6 +67,18 @@ public class Coupon {
 	}
 	public void setState(int state) {
 		this.state = state;
+	}
+	public int getIsguess() {
+		return isguess;
+	}
+	public void setIsguess(int isguess) {
+		this.isguess = isguess;
+	}
+	public int getIsrecommend() {
+		return isrecommend;
+	}
+	public void setIsrecommend(int isrecommend) {
+		this.isrecommend = isrecommend;
 	}
 	public Coupon() {
 	
@@ -124,13 +137,29 @@ public class Coupon {
 		this.seller_counts = seller_counts;
 		this.state = state;
 	}
+
+
+	public Coupon(int id, int seller_id, int original_price, int current_price, String description, String public_time,
+			String update_time, int seller_counts, int state, int isguess, int isrecommend) {
+		super();
+		this.id = id;
+		this.seller_id = seller_id;
+		this.original_price = original_price;
+		this.current_price = current_price;
+		this.description = description;
+		this.public_time = public_time;
+		this.update_time = update_time;
+		this.seller_counts = seller_counts;
+		this.state = state;
+		this.isguess = isguess;
+		this.isrecommend = isrecommend;
+	}
 	@Override
 	public String toString() {
-		return "Coupon [id=" + id + ", seller_id=" + seller_id
-				+ ", original_price=" + original_price + ", current_price="
-				+ current_price + ", description=" + description
-				+ ", public_time=" + public_time + ", update_time="
-				+ update_time + ", seller_counts=" + seller_counts + ", state="
-				+ state + "]";
+		return "Coupon [id=" + id + ", seller_id=" + seller_id + ", original_price=" + original_price
+				+ ", current_price=" + current_price + ", description=" + description + ", public_time=" + public_time
+				+ ", update_time=" + update_time + ", seller_counts=" + seller_counts + ", state=" + state
+				+ ", isguess=" + isguess + ", isrecommend=" + isrecommend + "]";
 	}
+	
 }

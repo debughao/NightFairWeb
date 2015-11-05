@@ -50,7 +50,7 @@ public class Filter implements javax.servlet.Filter {
 		HttpServletResponse response2 = (HttpServletResponse) response;
 		User user=(User) request2.getSession().getAttribute("user");
 		if(user==null){
-			response2.sendRedirect("/login.html");
+			response2.sendRedirect("/Nightfari/login.html");
 			return;
 		}
 		System.out.println(user);

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.nightfair.dao.Interface.IGoodsDao;
 import com.nightfair.uitl.DBUtils;
@@ -163,4 +164,38 @@ public class GoodDao implements IGoodsDao {
 		DBUtils.release(null, preparedStatement, connection);
 		return isSuccess;
 	}
+	@Override
+	public List<Goods> getGoods() {
+		Goods goods = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		List<Goods> list=new ArrayList<Goods>();
+		String sql;
+		sql = "select * from goods limit 0,8";
+		ResultSet rs = null;
+
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String good_name = rs.getString("good_name");
+				double real_price = rs.getDouble("real_price");
+				int seller_counts = rs.getInt("seller_counts");
+				String introduction = rs.getString("introduction");
+				String img = rs.getString("img");
+				int seller_id = rs.getInt("seller_id");
+				int recommend_num = rs.getInt("recommend_num");
+				goods = new Goods(id, good_name, real_price, seller_counts,
+						introduction, img, seller_id, recommend_num);
+				list.add(goods);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DBUtils.release(rs, preparedStatement, connection);
+		return list;
+	}
+
 }

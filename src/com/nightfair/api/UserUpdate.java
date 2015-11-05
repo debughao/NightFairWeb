@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.nightfair.dao.BuyerDao;
 import com.nightfair.dao.DaoFactory;
-import com.nightfair.dao.SellerDao;
 import com.nightfair.uitl.Datetime;
 import com.nightfair.uitl.MD5Util;
 import com.nightfair.vo.BuyerInfo;

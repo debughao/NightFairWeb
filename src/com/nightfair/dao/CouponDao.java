@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import com.nightfair.dao.Interface.ICouponDao;
 import com.nightfair.uitl.DBUtils;
 import com.nightfair.vo.Coupon;
+import com.nightfair.vo.SellerAndCoupon;
 
 public class CouponDao implements ICouponDao {
 
@@ -19,7 +20,7 @@ public class CouponDao implements ICouponDao {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		String sql = "select * from coupon where seller_id= ?";
+		String sql = "select * from coupon,manage_coupon where coupon.id=manage_coupon.coupon_id and seller_id= ?";
 		connection = DBUtils.getConnection();
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -34,9 +35,44 @@ public class CouponDao implements ICouponDao {
 				String update_time = rs.getString("update_time");
 				int seller_counts = rs.getInt("seller_counts");
 				int state = rs.getInt("state");
-				Coupon coupon = new Coupon(id, seller_id, original_price,
-						current_price, description, public_time, update_time,
-						seller_counts, state);
+				int isguess = rs.getInt("isguess");
+				int isrecoomend = rs.getInt("isrecoomend");
+				Coupon coupon = new Coupon(id, seller_id, original_price, current_price, description, public_time,
+						update_time, seller_counts, state, isguess, isrecoomend);
+				couponsList.add(coupon);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.release(rs, preparedStatement, connection);
+		}
+		return couponsList;
+	}
+	@Override
+	public ArrayList<Coupon> getAllGeuessCouponBysellerId(int seller_id) {
+		ArrayList<Coupon> couponsList = new ArrayList<Coupon>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		String sql = "select * from coupon,manage_coupon where coupon.id=manage_coupon.coupon_id and isguess=1 and seller_id= ?";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, seller_id);
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				int original_price = rs.getInt("original_price");
+				int current_price = rs.getInt("current_price");
+				String description = rs.getString("description");
+				String public_time = rs.getString("public_time");
+				String update_time = rs.getString("update_time");
+				int seller_counts = rs.getInt("seller_counts");
+				int state = rs.getInt("state");
+				int isguess = rs.getInt("isguess");
+				int isrecoomend = rs.getInt("isrecoomend");
+				Coupon coupon = new Coupon(id, seller_id, original_price, current_price, description, public_time,
+						update_time, seller_counts, state, isguess, isrecoomend);
 				couponsList.add(coupon);
 			}
 		} catch (SQLException e) {
@@ -48,6 +84,40 @@ public class CouponDao implements ICouponDao {
 	}
 
 	@Override
+	public ArrayList<Coupon> getAllRecommandCouponBysellerId(int seller_id) {
+		ArrayList<Coupon> couponsList = new ArrayList<Coupon>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		String sql = "select * from coupon,manage_coupon where coupon.id=manage_coupon.coupon_id and isrecoomend=1 and seller_id= ?";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, seller_id);
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				int original_price = rs.getInt("original_price");
+				int current_price = rs.getInt("current_price");
+				String description = rs.getString("description");
+				String public_time = rs.getString("public_time");
+				String update_time = rs.getString("update_time");
+				int seller_counts = rs.getInt("seller_counts");
+				int state = rs.getInt("state");
+				int isguess = rs.getInt("isguess");
+				int isrecoomend = rs.getInt("isrecoomend");
+				Coupon coupon = new Coupon(id, seller_id, original_price, current_price, description, public_time,
+						update_time, seller_counts, state, isguess, isrecoomend);
+				couponsList.add(coupon);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.release(rs, preparedStatement, connection);
+		}
+		return couponsList;
+	}
+	@Override
 	public Coupon addCoupon(Coupon coupon) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -55,8 +125,7 @@ public class CouponDao implements ICouponDao {
 		ResultSet rs = null;
 		try {
 			connection = DBUtils.getConnection();
-			preparedStatement = connection.prepareStatement(sql,
-					Statement.RETURN_GENERATED_KEYS);
+			preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, coupon.getSeller_id());
 			preparedStatement.setInt(2, coupon.getOriginal_price());
 			preparedStatement.setInt(3, coupon.getCurrent_price());
@@ -121,5 +190,53 @@ public class CouponDao implements ICouponDao {
 		}
 		return isSuccess;
 	}
+
+	@Override
+	public ArrayList<SellerAndCoupon> getAllCoupon( String parm) {
+		ArrayList<SellerAndCoupon> sellerAndCoupons = new ArrayList<SellerAndCoupon>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "select * FROM view_seller_coupon GROUP BY view_seller_coupon.user_id  ";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				int user_id = resultSet.getInt("user_id");
+				String seller_name = resultSet.getString("seller_name");
+				String phone = resultSet.getString("seller_phone");
+				String province = resultSet.getString("province");
+				String city = resultSet.getString("city");
+				String arer = resultSet.getString("arer");
+				String street = resultSet.getString("street");
+				String latitude = resultSet.getString("latitude");
+				String longitude = resultSet.getString("longitude");
+				String classify_id = resultSet.getString("classify_id");
+				String img = resultSet.getString("img");
+				double rank = resultSet.getDouble("rank");
+				CouponDao couponDao = DaoFactory.getInstance().getCouponDao();
+				ArrayList<Coupon> coupons = new ArrayList<Coupon>();
+				if (parm.equals("getGuessCoupon")) {
+					coupons = couponDao.getAllGeuessCouponBysellerId(id);
+				}else if (parm.equals("getRecommandCoupon")) {
+					coupons = couponDao.getAllRecommandCouponBysellerId(id);
+				}else if (parm.equals("getAllCoupon")) {
+					coupons = couponDao.getAllCouponBysellerId(id);
+				}			
+				SellerAndCoupon sellerAndCoupon = new SellerAndCoupon(id, user_id, seller_name, phone, province, city,
+						arer, street, latitude, longitude, rank, classify_id, img, coupons);
+				sellerAndCoupons.add(sellerAndCoupon);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.release(resultSet, preparedStatement, connection);
+		}
+		return sellerAndCoupons;
+	}
+
+
 
 }

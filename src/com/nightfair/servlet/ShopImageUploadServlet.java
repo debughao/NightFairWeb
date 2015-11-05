@@ -95,7 +95,7 @@ public class ShopImageUploadServlet extends HttpServlet {
 						// 上传成功，则插入数据库
 						if (new File(fileRealPath).exists()) {
 							// 虚拟路径赋值
-							fileRealResistPath = "www.debguhao.cn/image/shopimage/"+user_ids+"/"
+							fileRealResistPath = "/image/shopimage/"+user_ids+"/"
 									+ fileRealPath.substring(
 											fileRealPath.lastIndexOf("\\") + 1);
 							System.out.println("虚拟路径:" + fileRealResistPath);

@@ -26,6 +26,12 @@ public class BuyerInfo implements Serializable {
 				+ image + "]";
 	}
 
+	public BuyerInfo(String user_id, String nickname) {
+		super();
+		this.user_id = user_id;
+		this.nickname = nickname;
+	}
+
 	public BuyerInfo(String user_id, String nickname, String sex, String age, String star, String hometown,
 			String address, String autograph, String image) {
 		super();

@@ -8,8 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.nightfair.dao.AccountDao;
 import com.nightfair.dao.BuyerDao;
 import com.nightfair.dao.DaoFactory;
 import com.nightfair.dao.UserDao;
@@ -19,16 +19,16 @@ import com.nightfair.vo.User;
 import net.sf.json.JSONObject;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class Register
  */
-@WebServlet("/buyer/login")
-public class Login extends HttpServlet {
+@WebServlet("/buyer/register")
+public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Login() {
+	public Register() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -39,6 +39,7 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doPost(request, response);
 	}
 
@@ -54,41 +55,45 @@ public class Login extends HttpServlet {
 		int status = 404;
 		String result = "";
 		JSONObject jsonObject = new JSONObject();
-		UserDao userDao = DaoFactory.getInstance().getUserDao();
 		String key = request.getParameter("key");
 		System.out.println("用户的key：" + key);
 		if ("a2e22c742b952403".equals(key)) {
-			String username = request.getParameter("userName");
-			String password = request.getParameter("userpassword");
-			System.out.println("用户名：" + username + "密码：" + password);
-			User user2 = userDao.isPassLogin(username, password, "2");
-			if (user2 == null) {
-				status = 10002;// 10002表示不可以登录
-				result = "登录名或密码错误！";
-			} else {
-				HttpSession session = request.getSession();
-				session.setAttribute("buyer", user2);
-				session.setMaxInactiveInterval(60 * 60 * 24 * 31);// 一个月
-				BuyerDao buyerDao = DaoFactory.getInstance().getBuyerDao();
-				BuyerInfo buyerInfo = new BuyerInfo();
-				buyerInfo = buyerDao.getBuyerinfo(user2.getU_id());
-				if (buyerInfo != null) {
-					jsonObject.put("user_id", user2.getU_id());
-					jsonObject.put("info", buyerInfo);
-					status = 200;
-					result = "获取数据成功";
+			String action = request.getParameter("action");
+			System.out.println("用户操作"+action);
+			UserDao userDao = DaoFactory.getInstance().getUserDao();
+			if ("isAlready".equals(action)) {
+				String phone = request.getParameter("phone");
+				
+				if (userDao.existUserByPhone(phone,"2")) {
+					status=200;
+					result="该手机号可以注册";
+				}else{
+					status=10002;
+					result="该手机号已被注册";
 				}
-				System.out.println(request.getSession().getId());
-				status = 200;
-				result = "登录成功！";
+			}else if ("register".equals(action)) {
+				String phone = request.getParameter("phone");
+				String password = request.getParameter("password");
+				String nickname = request.getParameter("nickname");			
+				System.out.println(phone+"--->"+password+"---"+nickname);
+				User user=new User(0, null, null, phone, password, "2");
+				int user_id=userDao.phoneRegiserUser(user);
+				if (user_id>0) {			
+					BuyerDao buyerDao=DaoFactory.getInstance().getBuyerDao();
+					BuyerInfo buyerInfo=new BuyerInfo(String.valueOf(user_id), nickname);
+					AccountDao accountDao=DaoFactory.getInstance().getAccountDao();
+					accountDao.insertAccount(user_id);
+					buyerDao.insertBuyerInfo(buyerInfo);
+					status=200;
+					result="注册成功";
+				}
 			}
-
 		} else {
 			status = 10001;
 			result = "错误的请求key！";
 		}
 		jsonObject.put("status", status);
-		jsonObject.put("errReason", result);
+		jsonObject.put("result", result);
 		PrintWriter pw = response.getWriter();
 		pw.write(jsonObject.toString());
 		System.out.println(jsonObject);

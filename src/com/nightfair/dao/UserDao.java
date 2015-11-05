@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import com.nightfair.dao.Interface.IUserDao;
 import com.nightfair.uitl.DBUtils;
 import com.nightfair.uitl.MD5Util;
 import com.nightfair.uitl.Matches;
-import com.nightfair.uitl.RandomNickname;
 import com.nightfair.vo.SellerInfo;
 import com.nightfair.vo.User;
 
@@ -28,7 +28,7 @@ public class UserDao implements IUserDao {
 	}
 
 	@Override
-	public boolean existUserByUsername(String parameter) {
+	public boolean existUserByUsername(String parameter,String type) {
 		boolean f = true;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -52,17 +52,18 @@ public class UserDao implements IUserDao {
 	}
 
 	@Override
-	public boolean existUserByPhone(String parameter) {
+	public boolean existUserByPhone(String parameter,String type) {
 
 		boolean f = true;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		String sql = "select * from user where phone= ? limit 1 ";
+		String sql = "select * from user where phone= ? and type=? limit 1 ";
 		connection = DBUtils.getConnection();
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, parameter);
+			preparedStatement.setString(2, type);
 			rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				f = false;
@@ -71,14 +72,13 @@ public class UserDao implements IUserDao {
 			e.printStackTrace();
 		} finally {
 			DBUtils.release(rs, preparedStatement, connection);
-			System.out.println(f);
 		}
 		return f;
 
 	}
 
 	@Override
-	public boolean existUserByEmail(String parameter) {
+	public boolean existUserByEmail(String parameter,String type) {
 
 		boolean f = true;
 		Connection connection = null;
@@ -103,72 +103,97 @@ public class UserDao implements IUserDao {
 
 	}
 
-	@Override
-	public boolean regiserUser(User uer) {
-		boolean f = true;
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		String sql = "insert into user(username,nickname,email,phone,password,type) values(?,?,?,?,?,?)";
-		connection = DBUtils.getConnection();
-		try {
-			preparedStatement = connection.prepareStatement(sql);
-			RandomNickname rNickname = new RandomNickname();
-			String nickname = "用户" + 2 * rNickname.getRandomHan();
-			preparedStatement.setString(1, uer.getUsername());
-			preparedStatement.setString(2, nickname);
-			preparedStatement.setString(3, uer.getEmail());
-			preparedStatement.setString(4, uer.getPhone());
-			preparedStatement.setString(5, MD5Util.MD5(uer.getPassword()));
-			preparedStatement.setString(6, uer.getType());
-			if (preparedStatement.executeUpdate() > 0) {
-				f = false;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			DBUtils.release(null, preparedStatement, connection);
-			System.out.println(f);
-		}
-		return f;
-	}
 
 	@Override
-	public User isPassLogin(String username ,String password,String type) {
+	public User isPassLogin(String username, String password, String type) {
 		User f = null;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		String usernames=null;
-		String emails=null;
-		String phones=null;
-		if(Matches.isUsename(username)){
-			usernames=username;
-		}else if(Matches.isPhone(username)){
-			phones=username;
-		}else if(Matches.isEmail(username)){
-			emails=username;
+		String usernames = null;
+		String emails = null;
+		String phones = null;
+		if (Matches.isUsename(username)) {
+			usernames = username;
+		} else if (Matches.isPhone(username)) {
+			phones = username;
+		} else if (Matches.isEmail(username)) {
+			emails = username;
 		}
 		String sql = "SELECT * FROM USER WHERE(username=? OR email=? OR phone=?) AND PASSWORD=? and type=? ";
 		connection = DBUtils.getConnection();
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, usernames);
-			preparedStatement.setString(2,emails);
+			preparedStatement.setString(2, emails);
 			preparedStatement.setString(3, phones);
 			preparedStatement.setString(4, password);
 			preparedStatement.setString(5, type);
 			rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				int u_id = rs.getInt("u_id");			
-				f =new User(u_id, username, password, type);				
+				int u_id = rs.getInt("u_id");
+				f = new User(u_id, null, null, type);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DBUtils.release(rs, preparedStatement, connection);
 		}
-	
+
 		return f;
 
+	}
+	@Override
+	public int  regiserUser(User uer) {
+		int  f = 0;
+		ResultSet rs = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "insert into user(username,email,phone,password,type) values(?,?,?,?,?)";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, uer.getUsername());
+			preparedStatement.setString(2, uer.getEmail());
+			preparedStatement.setString(3, uer.getPhone());
+			preparedStatement.setString(4, MD5Util.MD5(uer.getPassword()));
+			preparedStatement.setString(5, uer.getType());
+			preparedStatement.execute();
+			rs = preparedStatement.getGeneratedKeys();
+			while (rs.next()) {
+				f=rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBUtils.release(rs, preparedStatement, connection);
+		}
+		return f;
+	}
+
+	@Override
+	public int phoneRegiserUser(User uer) {
+		int  f = 0;
+		ResultSet rs = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "insert into user(phone,password,type) values(?,?,?)";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, uer.getPhone());
+			preparedStatement.setString(2, MD5Util.MD5(uer.getPassword()));
+			preparedStatement.setString(3, uer.getType());
+			preparedStatement.execute();
+			rs = preparedStatement.getGeneratedKeys();
+			while (rs.next()) {
+				f=rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.release(null, preparedStatement, connection);
+		}
+		return f;
 	}
 }

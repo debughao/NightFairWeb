@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 import com.nightfair.dao.Interface.IBuyerDao;
 import com.nightfair.uitl.DBUtils;
 import com.nightfair.vo.BuyerInfo;
@@ -100,6 +102,63 @@ public class BuyerDao implements IBuyerDao {
 			DBUtils.release(resultSet, preparedStatement, connection);
 		}
 		return isSuccess;
+	}
+	@Override
+	public boolean insertBuyerInfo(BuyerInfo buyerInfo) {
+		// TODO Auto-generated method stub
+		boolean f = false;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "insert into buyer_info(user_id,nickname) values(?,?)";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);		
+			preparedStatement.setString(1, buyerInfo.getUser_id());
+			preparedStatement.setString(2,  buyerInfo.getNickname());
+			int n=preparedStatement.executeUpdate();
+			if (n>0) {
+				f=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.release(null, preparedStatement, connection);
+			System.out.println(f);
+		}
+		return f;
+	}
+	@Override
+	public BuyerInfo getBuyerInfoByphone(String phone) {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		BuyerInfo buyerInfo = null;
+		ResultSet resultSet = null;
+		String sql = "SELECT * FROM user, buyer_info WHERE user.u_id=buyer_info.user_id AND phone=? LIMIT 1";
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, phone);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {	
+				String user_id= resultSet.getString("user_id");
+				String nickname = resultSet.getString("nickname");
+				String sex = resultSet.getString("sex");
+				String age = resultSet.getString("age");
+				String star = resultSet.getString("star");
+				String hometown = resultSet.getString("hometown");
+				String address = resultSet.getString("address");
+				String autograph = resultSet.getString("autograph");
+				String image = resultSet.getString("image");
+				buyerInfo = new BuyerInfo(user_id, nickname, sex, age, star, hometown, address, autograph, image);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DBUtils.release(resultSet, preparedStatement, connection);
+		return buyerInfo;
+		
 	}
 
 

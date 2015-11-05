@@ -9,4 +9,5 @@ public abstract boolean updateSellerInfo(SellerInfo sellerInfo);
 public abstract SellerInfo getSellerInfoByUser_id(int User_id);
 public abstract boolean existSeller(String id);
 public abstract boolean uploadshopimage(String imageur, int userid);
+public abstract boolean insertBuyerInfo(int seller_id);
 }

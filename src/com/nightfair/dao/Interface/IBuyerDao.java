@@ -12,7 +12,8 @@ public interface IBuyerDao {
 	/**
 	 * @Title getBuyerinfo
 	 * @Description TODO(获取买家个人资料)
-	 * @param user_id  买家用户id
+	 * @param user_id
+	 *            买家用户id
 	 * @return BuyerInfo 返回类型 买家实体
 	 */
 	public abstract BuyerInfo getBuyerinfo(int user_id);
@@ -41,4 +42,8 @@ public interface IBuyerDao {
 	 * @return boolean 返回类型
 	 */
 	public abstract boolean updateBuyerInfo(BuyerInfo buyerInfo);
+
+	public abstract boolean insertBuyerInfo(BuyerInfo buyerInfo);
+
+	public abstract BuyerInfo getBuyerInfoByphone(String phone);
 }
