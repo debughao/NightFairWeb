@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import com.nightfair.dao.Interface.IAccountDao;
 import com.nightfair.uitl.DBUtils;
 import com.nightfair.uitl.MD5Util;
+import com.nightfair.vo.Recharge;
 
 public class AccountDao implements IAccountDao {
 
@@ -35,9 +36,9 @@ public class AccountDao implements IAccountDao {
 	}
 
 	@Override
-	public int selectAccount(int user_id) {
+	public double selectAccount(int user_id) {
 		// TODO Auto-generated method stub
-		int balance = 0;
+		double balance = 0 ;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -48,7 +49,7 @@ public class AccountDao implements IAccountDao {
 			preparedStatement.setInt(1, user_id);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				balance = resultSet.getInt("balance");
+				balance = resultSet.getDouble("balance");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,7 +59,7 @@ public class AccountDao implements IAccountDao {
 	}
 
 	@Override
-	public boolean updateAccountbalance(int user_id, String opeartion, int money) {
+	public boolean updateAccountbalance(int user_id, String opeartion, double money) {
 		// TODO Auto-generated method stub
 		boolean isSuccess = false;
 		Connection connection = null;
@@ -73,7 +74,7 @@ public class AccountDao implements IAccountDao {
 		try {
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, money);
+			preparedStatement.setDouble(1, money);
 			preparedStatement.setInt(2, user_id);
 			int m = preparedStatement.executeUpdate();
 			if (m > 0) {
@@ -108,6 +109,34 @@ public class AccountDao implements IAccountDao {
 		}
 		DBUtils.release(rs, preparedStatement, connection);
 		return isSuccess;
+	}
+
+	@Override
+	public boolean insertRecharge(Recharge recharge) {
+		// TODO Auto-generated method stub
+		boolean f = false;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "insert into recharge_order(user_id,amount,recharge_way,transactionid,datetime) values(?,?,?,?,?)";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, recharge.getUser_id());
+			preparedStatement.setDouble(2, recharge.getAmount());
+			preparedStatement.setString(3, recharge.getRecharge_way());
+			preparedStatement.setString(4, recharge.getTransactionid());
+			preparedStatement.setString(5, recharge.getDatetime());
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				f = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.release(null, preparedStatement, connection);
+			System.out.println("充值结果：" + f);
+		}
+		return f;
 	}
 
 }

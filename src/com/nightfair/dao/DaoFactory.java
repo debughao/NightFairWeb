@@ -17,6 +17,7 @@ public class DaoFactory {
 	private static CommentDao commentDao = null;
 	private static BuyerDao buyerrDao = null;
 	private static AccountDao accountDao=null;
+	private static OrderDao orderDao=null;
 	private static DaoFactory daoFactory = new DaoFactory();
 
 	private DaoFactory() {
@@ -28,6 +29,7 @@ public class DaoFactory {
 		commentDao = new CommentDao();
 		buyerrDao = new BuyerDao();
 		accountDao=new AccountDao();
+		orderDao=new OrderDao();
 	}
 
 	public static DaoFactory getInstance() {
@@ -65,6 +67,10 @@ public class DaoFactory {
 	}
 	public AccountDao getAccountDao() {
 		return accountDao;
+
+	}
+	public OrderDao getOrderDao() {
+		return orderDao;
 
 	}
 }
