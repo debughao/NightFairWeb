@@ -1,6 +1,11 @@
 package com.nightfair.dao.Interface;
 
+import java.util.ArrayList;
+
+import com.nightfair.vo.BuyerCollection;
 import com.nightfair.vo.BuyerInfo;
+import com.nightfair.vo.Collection;
+import com.nightfair.vo.Nearby;
 
 /**
  * 
@@ -46,4 +51,7 @@ public interface IBuyerDao {
 	public abstract boolean insertBuyerInfo(BuyerInfo buyerInfo);
 
 	public abstract BuyerInfo getBuyerInfoByphone(String phone);
+	public abstract boolean isCollectionCoupon(Collection Collection, String way);
+	public abstract ArrayList<BuyerCollection> selectCollection(int user_id);
+	public abstract ArrayList<Nearby> selectAllShop();
 }

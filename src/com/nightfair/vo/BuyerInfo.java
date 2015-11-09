@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class BuyerInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private String user_id;
 	private String nickname;
 	private String sex;
@@ -19,18 +20,36 @@ public class BuyerInfo implements Serializable {
 
 	}
 
+
 	@Override
 	public String toString() {
-		return "BuyerInfo [user_id=" + user_id + ", nickname=" + nickname + ", sex=" + sex + ", age=" + age + ", star="
-				+ star + ", hometown=" + hometown + ", address=" + address + ", autograph=" + autograph + ", image="
-				+ image + "]";
+		return "BuyerInfo [id=" + id + ", user_id=" + user_id + ", nickname=" + nickname + ", sex=" + sex + ", age="
+				+ age + ", star=" + star + ", hometown=" + hometown + ", address=" + address + ", autograph="
+				+ autograph + ", image=" + image + "]";
 	}
+
 
 	public BuyerInfo(String user_id, String nickname) {
 		super();
 		this.user_id = user_id;
 		this.nickname = nickname;
 	}
+
+	public BuyerInfo(int id, String user_id, String nickname, String sex, String age, String star, String hometown,
+			String address, String autograph, String image) {
+		super();
+		this.id = id;
+		this.user_id = user_id;
+		this.nickname = nickname;
+		this.sex = sex;
+		this.age = age;
+		this.star = star;
+		this.hometown = hometown;
+		this.address = address;
+		this.autograph = autograph;
+		this.image = image;
+	}
+
 
 	public BuyerInfo(String user_id, String nickname, String sex, String age, String star, String hometown,
 			String address, String autograph, String image) {
@@ -116,6 +135,14 @@ public class BuyerInfo implements Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

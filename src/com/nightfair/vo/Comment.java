@@ -95,6 +95,16 @@ public class Comment {
 		this.nickname = nickname;
 	}
 
+	public Comment(int id, double grade, String comment, String time, int seller_id, int user_id) {
+		super();
+		this.id = id;
+		this.grade = grade;
+		this.comment = comment;
+		this.time = time;
+		this.seller_id = seller_id;
+		this.user_id = user_id;
+	}
+
 	public Comment() {
 
 	}

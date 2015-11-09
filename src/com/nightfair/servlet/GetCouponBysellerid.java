@@ -72,7 +72,7 @@ public class GetCouponBysellerid extends HttpServlet {
 				int current_price = Integer.parseInt(request.getParameter("current_price"));
 				String description = request.getParameter("description");
 				Coupon coupon1 = new Coupon(seller_id, original_price, current_price, description, Datetime.getNow(),
-						Datetime.getNow(), 0, 0);
+						Datetime.getNow(), 0);
 				Coupon coupon = couponDao.addCoupon(coupon1);
 				jsonObject.put("coupon", coupon);
 				status = 200;
@@ -87,7 +87,7 @@ public class GetCouponBysellerid extends HttpServlet {
 				System.out.println(id + "---->" + original_price + "---->" + current_price + "---->" + description);
 				Coupon coupon = null;
 				if ((coupon = couponDao.updateCoupon(new Coupon(id, seller_id, original_price, current_price,
-						description, null, Datetime.getNow(), 0, 0))) != null) {
+						description, null, Datetime.getNow(), 0))) != null) {
 					status = 200;
 					jsonObject.put("coupon", coupon);
 					result_status = "更新数据成功！";

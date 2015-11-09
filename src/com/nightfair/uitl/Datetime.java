@@ -4,8 +4,6 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import sun.misc.UUEncoder;
-
 public class Datetime {
 	public static String getNow() {
 		DateFormat d1 = DateFormat.getDateTimeInstance();

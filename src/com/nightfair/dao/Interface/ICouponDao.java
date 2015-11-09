@@ -14,5 +14,6 @@ public interface ICouponDao {
 	public abstract ArrayList<SellerAndCoupon> getAllCoupon(String parm);
 	public abstract ArrayList<Coupon> getAllGeuessCouponBysellerId(int seller_id);
 	public abstract ArrayList<Coupon> getAllRecommandCouponBysellerId(int seller_id);
+	public abstract ArrayList<SellerAndCoupon> getAllCouponBySeller_id(int seller_id);
 
 }

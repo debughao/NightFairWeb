@@ -34,11 +34,10 @@ public class CouponDao implements ICouponDao {
 				String public_time = rs.getString("public_time");
 				String update_time = rs.getString("update_time");
 				int seller_counts = rs.getInt("seller_counts");
-				int state = rs.getInt("state");
 				int isguess = rs.getInt("isguess");
 				int isrecoomend = rs.getInt("isrecoomend");
 				Coupon coupon = new Coupon(id, seller_id, original_price, current_price, description, public_time,
-						update_time, seller_counts, state, isguess, isrecoomend);
+						update_time, seller_counts, isguess, isrecoomend);
 				couponsList.add(coupon);
 			}
 		} catch (SQLException e) {
@@ -68,11 +67,10 @@ public class CouponDao implements ICouponDao {
 				String public_time = rs.getString("public_time");
 				String update_time = rs.getString("update_time");
 				int seller_counts = rs.getInt("seller_counts");
-				int state = rs.getInt("state");
 				int isguess = rs.getInt("isguess");
 				int isrecoomend = rs.getInt("isrecoomend");
 				Coupon coupon = new Coupon(id, seller_id, original_price, current_price, description, public_time,
-						update_time, seller_counts, state, isguess, isrecoomend);
+						update_time, seller_counts, isguess, isrecoomend);
 				couponsList.add(coupon);
 			}
 		} catch (SQLException e) {
@@ -103,11 +101,10 @@ public class CouponDao implements ICouponDao {
 				String public_time = rs.getString("public_time");
 				String update_time = rs.getString("update_time");
 				int seller_counts = rs.getInt("seller_counts");
-				int state = rs.getInt("state");
 				int isguess = rs.getInt("isguess");
 				int isrecoomend = rs.getInt("isrecoomend");
 				Coupon coupon = new Coupon(id, seller_id, original_price, current_price, description, public_time,
-						update_time, seller_counts, state, isguess, isrecoomend);
+						update_time, seller_counts, isguess, isrecoomend);
 				couponsList.add(coupon);
 			}
 		} catch (SQLException e) {
@@ -197,7 +194,7 @@ public class CouponDao implements ICouponDao {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String sql = "select * FROM view_seller_coupon GROUP BY view_seller_coupon.user_id  ";
+		String sql = "select * FROM view_seller_coupon GROUP BY view_seller_coupon.user_id ";
 		connection = DBUtils.getConnection();
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -225,6 +222,47 @@ public class CouponDao implements ICouponDao {
 				}else if (parm.equals("getAllCoupon")) {
 					coupons = couponDao.getAllCouponBysellerId(id);
 				}			
+				SellerAndCoupon sellerAndCoupon = new SellerAndCoupon(id, user_id, seller_name, phone, province, city,
+						arer, street, latitude, longitude, rank, classify_id, img, coupons);
+				sellerAndCoupons.add(sellerAndCoupon);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.release(resultSet, preparedStatement, connection);
+		}
+		return sellerAndCoupons;
+	}
+	@Override
+	public ArrayList<SellerAndCoupon> getAllCouponBySeller_id(int seller_id) {
+		// TODO Auto-generated method stub
+		ArrayList<SellerAndCoupon> sellerAndCoupons = new ArrayList<SellerAndCoupon>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "select * FROM view_seller_coupon WHERE id=?  GROUP BY view_seller_coupon.user_id ";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, seller_id);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				int user_id = resultSet.getInt("user_id");
+				String seller_name = resultSet.getString("seller_name");
+				String phone = resultSet.getString("seller_phone");
+				String province = resultSet.getString("province");
+				String city = resultSet.getString("city");
+				String arer = resultSet.getString("arer");
+				String street = resultSet.getString("street");
+				String latitude = resultSet.getString("latitude");
+				String longitude = resultSet.getString("longitude");
+				String classify_id = resultSet.getString("classify_id");
+				String img = resultSet.getString("img");
+				double rank = resultSet.getDouble("rank");
+				CouponDao couponDao = DaoFactory.getInstance().getCouponDao();
+				ArrayList<Coupon> coupons = new ArrayList<Coupon>();				
+					coupons = couponDao.getAllCouponBysellerId(id);							
 				SellerAndCoupon sellerAndCoupon = new SellerAndCoupon(id, user_id, seller_name, phone, province, city,
 						arer, street, latitude, longitude, rank, classify_id, img, coupons);
 				sellerAndCoupons.add(sellerAndCoupon);
