@@ -31,7 +31,7 @@ public class CommentDao implements ICommentDao {
 		int m = (pageNow - 1) * pageNum;
 		System.out.println(m);
 		int n = pageNum;
-		String sql = "select * from comments,buyer_info where comments.user_id=buyer_info.user_id and seller_id=? ORDER BY comments.id ASC limit ?,?";
+		String sql = "select * from comments,buyer_info where comments.buyer_id=buyer_info.user_id and seller_id=? ORDER BY comments.id ASC limit ?,?";
 		connection = DBUtils.getConnection();
 		try {
 			preparedStatement = connection.prepareStatement(sql);

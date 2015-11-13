@@ -65,6 +65,7 @@ public class GetCoupons extends HttpServlet {
 		String key = request.getParameter("key");
 		if ("a2e22c742b952403".equals(key)) {
 			String action = request.getParameter("action");
+			System.out.println("操作"+action);
 			//String action="getallbysellerrid";
 			if ("getGuessCoupon".equals(action)) {
 				sellerAndCoupons = couponDao.getAllCoupon(action);
@@ -92,12 +93,11 @@ public class GetCoupons extends HttpServlet {
 			}else if ("getallbysellerrid".equals(action)) {	
 				int seller_id=Integer.parseInt(request.getParameter("seller_id"));
 				//sellerAndCoupons = couponDao.getAllCouponBySeller_id(2);
-				sellerAndCoupons = couponDao.getAllCouponBySeller_id(seller_id);
-				if (sellerAndCoupons.size() != 0) {				
+				SellerAndCoupon	sellerAndCoupon = couponDao.getAllCouponBySeller_id(seller_id);
+				if (sellerAndCoupon!=null) {				
 					status = 200;
-					result = "请求数据成功！";
-					JSONArray jsonArray = JSONArray.fromObject(sellerAndCoupons);
-					jsonObject.put("data", jsonArray);
+					result = "请求数据成功！";			
+					jsonObject.put("data", sellerAndCoupon);
 				}else {
 					status = 404;
 					result = "获取数据失败！";

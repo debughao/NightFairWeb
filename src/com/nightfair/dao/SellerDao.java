@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import com.nightfair.dao.Interface.ISellerDao;
 import com.nightfair.uitl.DBUtils;
@@ -185,4 +186,29 @@ public class SellerDao implements ISellerDao {
 		return f;
 	}
 
+	@Override
+	public ArrayList<SellerInfo> FuzzyQuery(String sellername) {
+		// TODO Auto-generated method stub
+		 ArrayList<SellerInfo> sellerInfos=new ArrayList<SellerInfo>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "SELECT *FROM seller_info WHERE seller_name like'%" + sellername + "%' ";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String seller_name=resultSet.getString("seller_name");
+				SellerInfo sellerInfo=new SellerInfo(id, seller_name);
+				sellerInfos.add(sellerInfo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DBUtils.release(resultSet, preparedStatement, connection);
+
+		return sellerInfos;
+	}
 }

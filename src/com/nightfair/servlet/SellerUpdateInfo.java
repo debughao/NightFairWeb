@@ -48,7 +48,7 @@ public class SellerUpdateInfo extends HttpServlet {
 		response.setHeader("content-type", "text/html;charset=UTF-8");
 		JSONObject jsonObject = new JSONObject();
 		int state = 200;// 默认设置为成功
-		String result = "";		
+		String result = "";
 		SellerDao sellerDao = DaoFactory.getInstance().getSellerDao();
 		PrintWriter pw = response.getWriter();
 		User user = (User) request.getSession().getAttribute("user");
@@ -61,13 +61,13 @@ public class SellerUpdateInfo extends HttpServlet {
 				sellerInfo = sellerDao.getSellerInfoByUser_id(user.getU_id());
 				System.out.println(sellerInfo);
 				jsonObject.put("data", sellerInfo);
-				if(sellerInfo!=null){
-				state = 200;
-				result = "获取信息成功！";
-				}else{
+				if (sellerInfo != null) {
+					state = 200;
+					result = "获取信息成功！";
+				} else {
 					state = 404;
 					result = "查询不到信息";
-			 }					
+				}
 			} else if ("update".equals(action)) {
 				System.out.println("操作:" + action);
 				String name = request.getParameter("name");
@@ -79,8 +79,8 @@ public class SellerUpdateInfo extends HttpServlet {
 				String city = request.getParameter("city");
 				String arer = request.getParameter("arer");
 				String street = request.getParameter("street");
-				System.out.println(name + "-->" + phone + "-->" + classify + "-->" + longitude + "-->" + latitude + "-->"
-						+ province + "-->" + city + "-->" + arer + "-->" + street);
+				System.out.println(name + "-->" + phone + "-->" + classify + "-->" + longitude + "-->" + latitude
+						+ "-->" + province + "-->" + city + "-->" + arer + "-->" + street);
 				SellerInfo sellerInfo = new SellerInfo(seller_id, user.getU_id(), name, phone, province, city, arer,
 						street, latitude, longitude, 0, classify);
 				if (sellerDao.updateSellerInfo(sellerInfo)) {
@@ -90,15 +90,16 @@ public class SellerUpdateInfo extends HttpServlet {
 					state = 500;
 					result = "服务器错误，稍后重试！";
 				}
-			} else {
-				state = 405;// 无权访问
-				result = "无权限请求数据";
 			}
-			jsonObject.put("state", state);
-			jsonObject.put("result", result);
-			pw.write(jsonObject.toString());
-			System.out.println(jsonObject);
-			pw.close();
-
+		} else {
+			state = 405;// 无权访问
+			result = "无权限请求数据";
 		}
-	}}
+		jsonObject.put("state", state);
+		jsonObject.put("result", result);
+		pw.write(jsonObject.toString());
+		System.out.println(jsonObject);
+		pw.close();
+
+	}
+}

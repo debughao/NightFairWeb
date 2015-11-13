@@ -43,14 +43,15 @@ public class Filter implements javax.servlet.Filter {
 			FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		// place your code here
-		System.out.println("拦截到");
+		
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		HttpServletRequest request2 = (HttpServletRequest) request;
 		HttpServletResponse response2 = (HttpServletResponse) response;
 		User user=(User) request2.getSession().getAttribute("user");
 		if(user==null){
-			response2.sendRedirect("/Nightfari/login.html");
+			System.out.println("拦截到");
+			response2.sendRedirect("/login.html");
 			return;
 		}
 		System.out.println(user);

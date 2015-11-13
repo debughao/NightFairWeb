@@ -13,7 +13,38 @@ import com.nightfair.vo.Coupon;
 import com.nightfair.vo.SellerAndCoupon;
 
 public class CouponDao implements ICouponDao {
-
+	@Override
+	public ArrayList<Coupon> getAllCouponBysellerIds(int seller_id) {
+		ArrayList<Coupon> couponsList = new ArrayList<Coupon>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		String sql = "select * from coupon where seller_id= ?";
+		connection = DBUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, seller_id);
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				int original_price = rs.getInt("original_price");
+				int current_price = rs.getInt("current_price");
+				String description = rs.getString("description");
+				String public_time = rs.getString("public_time");
+				String update_time = rs.getString("update_time");
+				int seller_counts = rs.getInt("seller_counts");
+				Coupon coupon = new Coupon(id, seller_id, original_price,
+						current_price, description, public_time, update_time,
+						seller_counts);
+				couponsList.add(coupon);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.release(rs, preparedStatement, connection);
+		}
+		return couponsList;
+	} 
 	@Override
 	public ArrayList<Coupon> getAllCouponBysellerId(int seller_id) {
 		ArrayList<Coupon> couponsList = new ArrayList<Coupon>();
@@ -234,9 +265,9 @@ public class CouponDao implements ICouponDao {
 		return sellerAndCoupons;
 	}
 	@Override
-	public ArrayList<SellerAndCoupon> getAllCouponBySeller_id(int seller_id) {
+	public SellerAndCoupon getAllCouponBySeller_id(int seller_id) {
 		// TODO Auto-generated method stub
-		ArrayList<SellerAndCoupon> sellerAndCoupons = new ArrayList<SellerAndCoupon>();
+		SellerAndCoupon sellerAndCoupon = null;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -263,16 +294,15 @@ public class CouponDao implements ICouponDao {
 				CouponDao couponDao = DaoFactory.getInstance().getCouponDao();
 				ArrayList<Coupon> coupons = new ArrayList<Coupon>();				
 					coupons = couponDao.getAllCouponBysellerId(id);							
-				SellerAndCoupon sellerAndCoupon = new SellerAndCoupon(id, user_id, seller_name, phone, province, city,
-						arer, street, latitude, longitude, rank, classify_id, img, coupons);
-				sellerAndCoupons.add(sellerAndCoupon);
+				sellerAndCoupon = new SellerAndCoupon(id, user_id, seller_name, phone, province, city,
+						arer, street, latitude, longitude, rank, classify_id, img, coupons);			
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DBUtils.release(resultSet, preparedStatement, connection);
 		}
-		return sellerAndCoupons;
+		return sellerAndCoupon;
 	}
 
 

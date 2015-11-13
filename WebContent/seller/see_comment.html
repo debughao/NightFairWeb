@@ -75,18 +75,6 @@ a:hover {
 }
 </style>
 </head>
-<script>
-	$.ajax({
-		url : "/NightFair/Seller/GetComment",
-		type : "post",
-		success : function(data) {
-			var dataObj = JSON.parse(data);
-			if (dataObj.status == 405) {
-				location.href = '../login.html';
-			}
-		}
-	});
-</script>
 <body>
 	<div class="topbar-wrap white">
 		<div class="top-info-wrap">

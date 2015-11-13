@@ -16,18 +16,6 @@
 	src="../uploadify/jquery.uploadify.min.js"></script>
 <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css" />
 </head>
-<script>
-	$.ajax({
-		url : "/NightFair/SellerUpdateInfo",
-		type : "post",
-		success : function(data) {
-			var dataObj = JSON.parse(data);
-			if (dataObj.status == 405) {
-				location.href = '/NightFair/login.html';
-			}
-		}
-	});
-</script>
 <body>
 	<div class="topbar-wrap white">
 		<div class="top-info-wrap">

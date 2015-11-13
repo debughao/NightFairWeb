@@ -62,7 +62,7 @@ public class GetCouponBysellerid extends HttpServlet {
 			CouponDao couponDao = DaoFactory.getInstance().getCouponDao();
 			if ("select".equals(action)) {
 				ArrayList<Coupon> couponsList = new ArrayList<Coupon>();
-				couponsList = couponDao.getAllCouponBysellerId(seller_id);
+				couponsList = couponDao.getAllCouponBysellerIds(seller_id);
 				JSONArray jsonArray = JSONArray.fromObject(couponsList);
 				jsonObject.put("data", jsonArray);
 				status = 200;

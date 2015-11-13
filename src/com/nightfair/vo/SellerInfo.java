@@ -38,6 +38,14 @@ public class SellerInfo {
 		// TODO Auto-generated constructor stub
 	}
 
+	public SellerInfo(int id, String seller_name) {
+		super();
+		this.id = id;
+		this.seller_name = seller_name;
+	}
+
+
+
 	/**
 	 * 
 	 * 获取商家的所有信息.
